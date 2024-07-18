@@ -1,12 +1,12 @@
 const express = require('express');
 const path = require('path');
-const cors = require('cors'); // Import the cors package
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 7000;
 
-// Use CORS middleware to allow requests from any origin (use cautiously in production)
+// Configure CORS middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: 'https://codeshare-zeta-steel.vercel.app', // Allow requests from this origin
   methods: ['GET', 'POST'], // Specify allowed methods
   credentials: true, // Allow cookies to be sent
 }));
@@ -41,7 +41,7 @@ app.post('/api/pastes', (req, res) => {
 });
 
 // Route to retrieve a paste
-app.post('/api/pastes/:otp', (req, res) => {
+app.get('/api/pastes/:otp', (req, res) => {
   const { otp } = req.params;
   if (pastes[otp]) {
     res.json(pastes[otp]);
