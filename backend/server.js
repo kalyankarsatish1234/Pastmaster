@@ -5,8 +5,21 @@ const app = express();
 const PORT = process.env.PORT || 7000;
 
 // Configure CORS middleware
+const allowedOrigins = [
+  'https://codeshare-zeta-steel.vercel.app',
+  'http://localhost:5173'
+];
+
 app.use(cors({
-  origin: 'https://codeshare-zeta-steel.vercel.app', // Allow requests from this origin
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ['GET', 'POST'], // Specify allowed methods
   credentials: true, // Allow cookies to be sent
 }));
