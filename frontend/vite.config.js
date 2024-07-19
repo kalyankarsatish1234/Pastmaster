@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:7000', // Replace with your backend URL
+        target: 'https://pastmaster.onrender.com', // Replace with your backend URL
         changeOrigin: true,
         secure: false,
       },

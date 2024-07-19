@@ -1,7 +1,15 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors'); // Import the cors package
 const app = express();
 const PORT = process.env.PORT || 7000;
+
+// Use CORS middleware to allow requests from any origin (use cautiously in production)
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow requests from this origin
+  methods: ['GET', 'POST'], // Specify allowed methods
+  credentials: true, // Allow cookies to be sent
+}));
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
