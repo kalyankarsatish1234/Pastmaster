@@ -1,9 +1,10 @@
 const express = require('express');
-
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 7000;
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 const pastes = {};
 
@@ -39,6 +40,11 @@ app.post('/api/pastes/:otp', (req, res) => {
   } else {
     res.status(404).json({ error: 'Paste not found' });
   }
+});
+
+// Serve the frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
 app.listen(PORT, () => {
